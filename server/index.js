@@ -1,6 +1,7 @@
+require('dotenv').config();
 const express = require('express');
 const colors = require('colors')
-require('dotenv').config();
+const cors = require('cors')
 const { graphqlHTTP } = require('express-graphql')
 const schema = require('./schema/schema')
 const connectDB = require('./config/db')
@@ -11,6 +12,8 @@ const app = express();
 //Connect to databse
 connectDB()
 
+app.use(cors())
+
 app.use('/graphql', graphqlHTTP({
     schema,
     graphiql: process.env.NODE_ENV === 'development'
@@ -19,4 +22,4 @@ app.use('/graphql', graphqlHTTP({
 app.listen(port, console.log(`Server is running on port ${port}`)); 
 
 
-//1:28:58
+//2:9:58
