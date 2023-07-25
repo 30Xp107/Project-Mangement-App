@@ -112,6 +112,29 @@ const mutation = new GraphQLObjectType({
                 return Client.findByIdAndRemove(args.id)
             },
         },
+        //Update a client
+        updateClient: {
+            type: ClientType,
+            args: {
+                id: { type: GraphQLNonNull(GraphQLID) },
+                name: { type: GraphQLString },
+                email: { type: GraphQLString },
+                phone: { type: GraphQLString },
+            },
+            resolve(parent, args) {
+                return Client.findByIdAndUpdate(
+                    args.id,
+                    {
+                        $set: {
+                            name: args.name,
+                            email: args.email,
+                            phone: args.phone,
+                        },
+                    },
+                { new: true }
+                )
+            }
+        },
         // Add a project
         addProject: {
             type: ProjectType,
@@ -122,9 +145,9 @@ const mutation = new GraphQLObjectType({
                     type: new GraphQLEnumType({
                         name: 'ProjectStatus',
                         values: {
-                          'new': { value: 'New Account' },
-                          'progress': { value: 'In Progress' },
-                          'completed': { value: 'Completed' },
+                          new: { value: 'Not Started' },
+                          progress: { value: 'In Progress' },
+                          completed: { value: 'Completed' },
                         },
                     }),
                     defaultValue: 'Not Started',
@@ -163,9 +186,9 @@ const mutation = new GraphQLObjectType({
                     type: new GraphQLEnumType({
                         name: 'ProjectStatusUpdate',
                         values: {
-                          'new': { value: 'New Account' },
-                          'progress': { value: 'In Progress' },
-                          'completed': { value: 'Completed' },
+                          new: { value: 'Not Started' },
+                          progress : { value: 'In Progress' },
+                          completed : { value: 'Completed' },
                         },
                     }),
                  },
