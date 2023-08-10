@@ -42,8 +42,7 @@ const UPDATE_PROJECT= gql`
         $id: ID!,
         $name: String!, 
         $description: String!, 
-        $status: ProjectStatusUpdate!, 
-        $clientId: ID!) {
+        $status: ProjectStatusUpdate!) {
         updateProject(
             id: $id
             name: $name
